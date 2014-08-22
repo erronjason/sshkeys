@@ -102,4 +102,50 @@ Becomes:
 rsa-key-20140822 AAAAB3NzaC1yc2EAAAABJQAAAQEAkq3SFQtTtXdaksuwpBk9YzKiQUEx8MKG94uEwWlHAw+7YhDh7mxAiZ9pYDZNFho8pkEZ/lc1zVNkiq5SZtlSSgt6PZvYzTjOTH11XCLpMyznMS31RpJ0qFQyX6UlG0lA6zBl0WB1nER7jcpOf5CtpViW+Zn70MKrQyEuUG6VL1V+H+p3Y+8BqGJC6VcNXVJnIogiap6/L9o9d+IG6RhZL89fn1it47wadcPKTH7Mndk18uCUnAOQo0EVZ99tvft+k70eW1EhJYf4+tMt3RYdaiot6Q04SzfrRaYW5ObJGMTMofGVgr7f0uxA2BR6Wl3MM+Bd9WmCcrhqNDJZIafscw== me@mybox
 ```
 
+Now simply add the key as usual to the ~/.ssh/authorized_keys for the user you want the key installed on.
+
+--
+
+Now let's look at the other files associated with ssh. Looking in the .ssh directory, we'll likely see the following files:
+
+
+```
+.ssh/
+├── authorized_keys
+├── config
+├── id_rsa
+├── id_rsa.pub
+└── known_hosts
+```
+
+In detail, these are:
+
+
+ - **authorized_keys** - Where we place all our public keys to authenticate from a remote server, one per line.
+
+ - **config** - This file houses connection specific settings per host.
+
+ - **id_rsa** - This is the default name and location for a private key.
+
+ - **id_rsa.pub** - This is the default name and location for a public key.
+
+ - **known_hosts** - The first time we connect to a server we record a unique fingerprint. For more information on how this works, see the <a href="http://youtu.be/YEBfamv-_do" target="_blank">Diffie-Hellman Key Exchange</a>. If the host changes, we'll know due to it's entry in this file. Keys can be removed with ```ssh-keygen -R *hostname or IP*```.
+
+
+
+--
+
+Slightly off topic, is the ```.ssh/config``` file. This can be used to specify different key files for specific hosts.
+
+Say we want to use id_rsa_example and id_rsa_example.pub for just example.com, we'd adjust our config to look something like the following:
+
+```
+Host example
+    User me
+    Port 12345
+    HostName example.com
+    IdentityFile ~/.ssh/id_rsa_example
+```
+
+Now, ```ssh example``` will effectively be ```ssh me@example.com -p 12345 -i ~/.ssh/id_rsa_example``` every time you connect.
 
