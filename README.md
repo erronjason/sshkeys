@@ -68,12 +68,17 @@ You may also specify key length with the -b argument. The default length being 2
 In widows, we'll assume you're using PuTTY, or a PuTTY derivative.
 
 Let's open up "PuTTYgen.exe" to generate our public and private keys.
+
 ![Generating a key with puttygen](https://raw.githubusercontent.com/erronjason/sshkeys/master/resources/img/puttygen.gif)
 
+
 Next, save the keys. Here we're saving it without a password. To specify a password, simply enter and confirm it in the appropriate fields.
+
 ![Saving public and private keys without a password](https://raw.githubusercontent.com/erronjason/sshkeys/master/resources/img/puttygen1.gif)
 
+
 Now we'll open PuTTY and specify our private key, and save this to the default configuration. We can do the same for existing configurations by loading the saved config and saving it back after the key has been specified.
+
 ![Loading our private key into the PuTTY config](https://raw.githubusercontent.com/erronjason/sshkeys/master/resources/img/putty.gif)
 
 The public key can be edited with your favorite text editor, but will need to be edited to be on a single line prior to insertion into a *nix server.
