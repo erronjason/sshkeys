@@ -1,12 +1,13 @@
 SSH keys are the bee's knees
 ---
----
 Imagine having a static authentication method amongst all your devices. How about passwordless logins?
  
 This is possible with SSH keys. When you generate a key, you get two pieces of information; your public and private keys. These are aptly named, as your public key can be shared around without the risk of compromising your systems, but the private key must be kept safe.
 
 ---
- 
+
+Generating keys
+---
 The method for using a key is relatively simple. In a vanilla setup where both machines are linux, we assume than openssh is installed.
 All of our magic will happen in the .ssh/ directory of your home folder.
  
@@ -42,6 +43,9 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD0HfOJrC3mFDZl3D2DB60DOHFSH9pwwlWe5nS5vKgz
 
 This is in turn put on the remote machine.
 
+Installing your public key
+---
+
 Let's login to the remote machine to install our key now.
 
 ```
@@ -62,13 +66,19 @@ ssh root@example.com
 root@example:~#
 ```
 
-There are multiple types of security available with ssh-keygen, the most common are RSA and DSA (specified at generation with -t). I would recommend gonig with RSA, as generation is slower, but authentication is faster.
+A quick word about security types
+---
+
+There are multiple types of security available with ssh-keygen, the most common are RSA and DSA (specified at generation with -t). I would recommend going with RSA, as generation is slower, but authentication is faster.
 As of openSSH 5.7, a more secure type known as ecdsa is available, but not widely used as putty and gnome-keyring do not currently support this type of encryption.
 
 You may also specify key length with the -b argument. The default length being 2048 bits.
 
-In widows, we'll assume you're using PuTTY, or a PuTTY derivative.
 
+Keys in Windows
+---
+
+In widows, we'll assume you're using PuTTY, or a PuTTY derivative.
 
 
 Let's open up "PuTTYgen.exe" to generate our public and private keys.
@@ -90,7 +100,7 @@ Now we'll open PuTTY and specify our private key, and save this to the default c
 
 The public key can be edited with your favorite text editor, but will need to be edited to be on a single line prior to insertion into a *nix server.
 
-Where:
+Where
 
 ```
 ---- BEGIN SSH2 PUBLIC KEY ----
@@ -113,6 +123,9 @@ rsa-key-20140822 AAAAB3NzaC1yc2EAAAABJQAAAQEAkq3SFQtTtXdaksuwpBk9YzKiQUEx8MKG94u
 
 Now simply add the key as usual to the ~/.ssh/authorized_keys for the user you want the key installed on.
 
+---
+
+Files in the .ssh/ folder
 ---
 
 Now let's look at the other files associated with ssh. Looking in the .ssh directory, we'll likely see the following files:
@@ -138,11 +151,13 @@ In detail, these are:
 
  - **id_rsa.pub** - This is the default name and location for a public key.
 
- - **known_hosts** - The first time we connect to a server we record a unique fingerprint. For more information on how this works, see the <a href="http://youtu.be/YEBfamv-_do" target="_blank">Diffie-Hellman Key Exchange</a>. If the host changes, we'll know due to it's entry in this file. Keys can be removed with ```ssh-keygen -R *hostname or IP*```.
+ - **known_hosts** - The first time we connect to a server we record a unique fingerprint. For more information on how this works, see the <a href="http://youtu.be/YEBfamv-_do" target="_blank">Diffie-Hellman Key Exchange</a>. If the host changes, we'll know due to it's entry in this file. Keys can be removed with ```ssh-keygen -R (hostname or IP)```.
 
 
 ---
 
+Using multiple keys
+---
 
 Slightly off topic, is the ```.ssh/config``` file. This can be used to specify different key files for specific hosts.
 
